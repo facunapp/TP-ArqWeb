@@ -17,7 +17,7 @@ public class MySqlFacturaDAO implements FacturaDAO {
 
     @Override
     public void insertar(Factura factura) {
-        String sql = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
+        String sql = "INSERT INTO factura (idFactura, idCliente) VALUES (?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 

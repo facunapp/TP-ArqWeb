@@ -18,7 +18,7 @@ public class MySqlProductoDAO implements ProductoDAO {
 
     @Override
     public void insertar(Producto producto) {
-        String sql = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 

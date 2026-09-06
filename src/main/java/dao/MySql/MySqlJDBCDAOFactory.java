@@ -1,16 +1,20 @@
 package dao.MySql;
 
-import dao.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import dao.ClienteDAO;
+import dao.DAOFactory;
+import dao.FacturaDAO;
+import dao.FacturaProductoDAO;
+import dao.ProductoDAO;
 
 public class MySqlJDBCDAOFactory extends DAOFactory {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URI = "jdbc:mysql://localhost:3306/integrador_db";
     private static final String USER = "root";
-    private static final String PASS = "root";
+    private static final String PASS = "";
 
     public static Connection createConnection() throws SQLException {
         return DriverManager.getConnection(URI, USER, PASS);

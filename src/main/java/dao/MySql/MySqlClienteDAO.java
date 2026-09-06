@@ -18,7 +18,7 @@ public class MySqlClienteDAO implements ClienteDAO {
 
     @Override
     public void insertar(Cliente cliente) {
-        String sql = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
