@@ -1,9 +1,11 @@
 package dao.MySql;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import dao.ProductoDAO;
 import entidades.Producto;
-
-import java.sql.Connection;
 
 
 public class MySqlProductoDAO implements ProductoDAO {
@@ -16,7 +18,19 @@ public class MySqlProductoDAO implements ProductoDAO {
 
     @Override
     public void insertar(Producto producto) {
+        String sql = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
 
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, producto.getIdProducto());
+            ps.setString(2, producto.getNombre());
+            ps.setFloat(3, producto.getValor());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,10 +1,11 @@
 package dao.MySql;
 
-import dao.FacturaDAO;
-
-import entidades.Factura;
-
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import dao.FacturaDAO;
+import entidades.Factura;
 
 
 public class MySqlFacturaDAO implements FacturaDAO {
@@ -16,6 +17,17 @@ public class MySqlFacturaDAO implements FacturaDAO {
 
     @Override
     public void insertar(Factura factura) {
+        String sql = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
 
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, factura.getIdFactura());
+            ps.setInt(2, factura.getIdCliente());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
