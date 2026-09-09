@@ -11,10 +11,9 @@ import dao.FacturaProductoDAO;
 import dao.ProductoDAO;
 
 public class MySqlJDBCDAOFactory extends DAOFactory {
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URI = "jdbc:mysql://localhost:3306/integrador_db";
     private static final String USER = "root";
-    private static final String PASS = "";
+    private static final String PASS = "root";
 
     public static Connection createConnection() throws SQLException {
         return DriverManager.getConnection(URI, USER, PASS);
