@@ -13,7 +13,7 @@
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/arquitectura_tp2?createDatabaseIfNotExist=true"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/integrador2_db?createDatabaseIfNotExist=true"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value="root"/>
 
