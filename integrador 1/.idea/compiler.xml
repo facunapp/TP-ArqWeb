@@ -9,8 +9,5 @@
         <module name="tp-integrador" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="tp-integrador" target="16" />
-    </bytecodeTargetLevel>
   </component>
 </project>

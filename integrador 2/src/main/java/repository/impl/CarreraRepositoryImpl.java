@@ -22,12 +22,15 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         em.getTransaction().commit();
     }
 
+    //metodo ej 2.f
     @Override
     public List<Carrera> obtenerCarrerasConInscriptos() {
-        return em.createQuery(
-            "SELECT DISTINCT ec.carrera FROM EstudianteCarrera ec ORDER BY ec.carrera.carrera ASC",
-            Carrera.class
-        ).getResultList();
+        String jpql = "SELECT ec.carrera " +
+                "FROM EstudianteCarrera ec " +
+                "GROUP BY ec.carrera " +
+                "ORDER BY COUNT(ec.estudiante) DESC";
+
+        return em.createQuery(jpql, Carrera.class).getResultList();
     }
 
     @Override
