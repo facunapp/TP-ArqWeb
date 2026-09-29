@@ -39,13 +39,20 @@ public class Main {
         List<Carrera> carreras = em.createQuery("SELECT c FROM Carrera c", Carrera.class).setMaxResults(1).getResultList();
         if (nuevoEstudiante != null && !carreras.isEmpty()) {
             try {
-                //matriculaRepo.matricular(nuevoEstudiante, carreras.get(0), 2023);
+                matriculaRepo.matricular(nuevoEstudiante, carreras.get(0), 2023);
                 System.out.println("Estudiante Test matriculado con éxito.");
             } catch (Exception e) {
                 System.out.println("La matriculación ya existía en la base de datos.");
             }
         }
+	System.out.println("\n-- PRUEBA PUNTO 2.c (Estudiantes ordenados por apellido) --");
 
+	List<Estudiante> estudiantes = estRepo.obtenerTodosPorCriterio();
+
+	for (Estudiante e : estudiantes) {
+	    System.out.println("- " + e.getApellido() + ", " + e.getNombre());
+	}
+	
         System.out.println("\n-- PRUEBA PUNTO 2.d (Buscar por LU: 5000) --");
         try {
             Estudiante buscado = estRepo.buscarPorLu(5000);
