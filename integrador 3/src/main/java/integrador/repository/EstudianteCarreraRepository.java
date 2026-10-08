@@ -1,12 +1,8 @@
-package repository;
+package integrador.repository;
 
-import entities.Carrera;
-import entities.Estudiante;
+import entities.EstudianteCarrera;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface EstudianteCarreraRepository {
-
-    void matricular(Estudiante estudiante, Carrera carrera, int anioInscripcion);
-    List<Estudiante> obtenerEstudiantesPorCarreraYCiudad(int idCarrera, String ciudad);
+public interface EstudianteCarreraRepository
+extends JpaRepository<EstudianteCarrera, Integer> {
 }

@@ -1,13 +1,8 @@
-package repository;
+package integrador.repository;
 
-import dto.ReporteCarreraDTO;
 import entities.Carrera;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface CarreraRepository {
-
-    void guardar(Carrera carrera);
-    List<Carrera> obtenerCarrerasConInscriptos();
-    List<ReporteCarreraDTO> generarReporteAnual();
+public interface CarreraRepository
+extends JpaRepository<Carrera, Integer> {
 }
