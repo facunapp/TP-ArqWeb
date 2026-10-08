@@ -16,13 +16,20 @@ public class EstudianteService {
         this.estudianteRepository = estudianteRepository;
     }
 
+    // 2.a
     public Estudiante guardar(Estudiante estudiante) {
         return estudianteRepository.save(estudiante);
     }
 
+    // 2.c
     public List<Estudiante> obtenerTodos() {
         return estudianteRepository.findAll(
                 Sort.by(Sort.Direction.ASC, "apellido")
         );
+    }
+
+    // 2.d
+    public Estudiante buscarPorLu(int lu) {
+        return estudianteRepository.findByLu(lu);
     }
 }
