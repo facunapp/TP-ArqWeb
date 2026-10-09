@@ -17,4 +17,8 @@ public class ReporteCarreraDTO {
     public int getAnio() { return anio; }
     public long getCantidadInscriptos() { return cantidadInscriptos; }
     public long getCantidadEgresados() { return cantidadEgresados; }
+
+    public void setCantidadEgresados(long cantidadEgresados) {
+        this.cantidadEgresados = cantidadEgresados;
+    }
 }
