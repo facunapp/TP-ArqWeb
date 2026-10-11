@@ -85,4 +85,9 @@ return repository.save(matricula);
         }
         return resultado;
     }
+
+
+    public List<Carrera> getCarrerasOrdenadasPorInscriptos() {
+        return repository.getCarrerasOrdenadasPorInscriptos();
+    }
 }

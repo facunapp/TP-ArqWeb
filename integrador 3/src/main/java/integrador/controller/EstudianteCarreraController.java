@@ -16,38 +16,38 @@ import java.util.List;
 @RequestMapping("/matriculas")
 public class EstudianteCarreraController {
 
-private final EstudianteCarreraService EstudianteCarreraService;
-private final EstudianteRepository estudianteRepository;
-private final CarreraRepository carreraRepository;
+    private final EstudianteCarreraService EstudianteCarreraService;
+    private final EstudianteRepository estudianteRepository;
+    private final CarreraRepository carreraRepository;
 
-public EstudianteCarreraController(
-EstudianteCarreraService matriculaService,
-EstudianteRepository estudianteRepository,
-CarreraRepository carreraRepository) {
+    public EstudianteCarreraController(
+            EstudianteCarreraService matriculaService,
+            EstudianteRepository estudianteRepository,
+            CarreraRepository carreraRepository) {
 
-this.EstudianteCarreraService = matriculaService;
-this.estudianteRepository = estudianteRepository;
-this.carreraRepository = carreraRepository;
-}
+        this.EstudianteCarreraService = matriculaService;
+        this.estudianteRepository = estudianteRepository;
+        this.carreraRepository = carreraRepository;
+    }
 
-@PostMapping("/{dni}/{idCarrera}")
-public EstudianteCarrera matricular(
-@PathVariable int dni,
-@PathVariable int idCarrera,
-@RequestParam int anio) {
+    @PostMapping("/{dni}/{idCarrera}")
+    public EstudianteCarrera matricular(
+            @PathVariable int dni,
+            @PathVariable int idCarrera,
+            @RequestParam int anio) {
 
-Estudiante estudiante = estudianteRepository.findById(dni)
-.orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+        Estudiante estudiante = estudianteRepository.findById(dni)
+                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
 
-Carrera carrera = carreraRepository.findById(idCarrera)
-.orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+        Carrera carrera = carreraRepository.findById(idCarrera)
+                .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
-return EstudianteCarreraService.matricular(
-estudiante,
-carrera,
-anio
-);
-}
+        return EstudianteCarreraService.matricular(
+                estudiante,
+                carrera,
+                anio
+        );
+    }
 
 
     @GetMapping("/estudiantes")
@@ -57,6 +57,10 @@ anio
 
         List<Estudiante> estudiantes = EstudianteCarreraService.getEstudiantesPorCarreraYCiudad(idCarrera, ciudad);
         return ResponseEntity.ok(estudiantes);
+    }
+    @GetMapping("/carreras/ordenadas-por-inscriptos")
+    public List<Carrera> getCarrerasOrdenadasPorInscriptos() {
+        return EstudianteCarreraService.getCarrerasOrdenadasPorInscriptos();
     }
 
     // Punto h) Generar el reporte de carreras (inscriptos y egresados por año)
