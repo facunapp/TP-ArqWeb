@@ -1,5 +1,5 @@
 package integrador.repository;
-
+import entities.Carrera;
 import entities.Estudiante;
 import entities.EstudianteCarrera;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,4 +31,9 @@ extends JpaRepository<EstudianteCarrera, Integer> {
             "GROUP BY c.carrera, ec.graduacion " +
             "ORDER BY c.carrera ASC, ec.graduacion ASC")
     List<Object[]> getEgresadosPorAnio();
+
+
+    // Carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos
+    @Query("SELECT c FROM EstudianteCarrera ec JOIN ec.carrera c GROUP BY c ORDER BY COUNT(ec) DESC")
+    List<Carrera> getCarrerasOrdenadasPorInscriptos();
 }

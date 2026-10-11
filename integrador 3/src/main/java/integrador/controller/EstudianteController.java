@@ -33,4 +33,11 @@ public class EstudianteController {
     public Estudiante buscarPorLu(@PathVariable int lu) {
         return estudianteService.buscarPorLu(lu);
     }
+
+    // 2.e - Buscar por género
+    @GetMapping("/genero/{genero}")
+    public List<Estudiante> obtenerPorGenero(@PathVariable String genero) {
+        return estudianteService.obtenerPorGenero(genero);
+    }
+
 }

@@ -32,4 +32,9 @@ public class EstudianteService {
     public Estudiante buscarPorLu(int lu) {
         return estudianteRepository.findByLu(lu);
     }
+
+    //2.e
+    public List<Estudiante> obtenerPorGenero(String genero) {
+        return estudianteRepository.findByGenero(genero);
+    }
 }
