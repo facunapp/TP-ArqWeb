@@ -1,0 +1,223 @@
+{
+  "info": {
+    "_postman_id": "298d2cea-0928-40d5-ab6e-e5b7cf137e16",
+    "name": "TPEArquiWeb2026",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "5663349"
+  },
+  "item": [
+    {
+      "name": "addEstudiante",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"dni\":12345678,\"nombre\":\"Juan\",\"apellido\":\"Perez\",\"edad\":22,\"genero\":\"M\",\"ciudad\":\"La Plata\",\"lu\":1001}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/estudiantes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "estudiantes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "addEstudianteInMateria",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/matriculas/12345678/1?anio=2024",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "matriculas",
+            "12345678",
+            "1"
+          ],
+          "query": [
+            {
+              "key": "anio",
+              "value": "2024"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getEstudiantesOrderByApellidoDesc",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/estudiantes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "estudiantes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getEestudianteByLu",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/estudiantes/lu/1001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "estudiantes",
+            "lu",
+            "1001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getEstudiantesByGeneroMasculino",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/estudiantes/genero/masculino",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "estudiantes",
+            "genero",
+            "masculino"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getEstudiantesByGeneroFemenino",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/estudiantes/genero/femenino",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "estudiantes",
+            "genero",
+            "femenino"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getCarrerasOrderByInscriptos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/matriculas/carreras/ordenadas-por-inscriptos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "matriculas",
+            "carreras",
+            "ordenadas-por-inscriptos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getReporteCarrerasByAnio",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/matriculas/reporte",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "matriculas",
+            "reporte"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getEstudiantesByCarreraAndCiudad",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/matriculas/estudiantes?idCarrera=1&ciudad=Buenos%20Aires",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "matriculas",
+            "estudiantes"
+          ],
+          "query": [
+            {
+              "key": "idCarrera",
+              "value": "1"
+            },
+            {
+              "key": "ciudad",
+              "value": "Buenos%20Aires"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
