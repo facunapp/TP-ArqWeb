@@ -18,11 +18,10 @@ public class EstudianteCarreraRepositoryImpl implements EstudianteCarreraReposit
 
     @Override
     public void matricular(Estudiante estudiante, Carrera carrera, int anioInscripcion) {
-        // En base a la teoría de JPA, envolvemos la operación persist (INSERT) en una transacción[cite: 7]
         em.getTransaction().begin();
 
-        // Completamos con valores por defecto (0) los campos de graduación y antigüedad que requiere tu entidad
-        EstudianteCarrera matricula = new EstudianteCarrera(0, estudiante, carrera, anioInscripcion, 0, 0);
+        // Creamos la matrícula sin antigüedad (el 0 final corresponde a graduación: no graduado)
+        EstudianteCarrera matricula = new EstudianteCarrera(estudiante, carrera, anioInscripcion, 0);
 
         em.persist(matricula);
         em.getTransaction().commit();

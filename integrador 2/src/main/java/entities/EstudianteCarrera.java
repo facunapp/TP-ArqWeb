@@ -5,78 +5,70 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "estudiante_carrera")
 public class EstudianteCarrera {
-    @Id
-    private int id; // ID propio del CSV
+
+    @EmbeddedId
+    private EstudianteCarreraId id = new EstudianteCarreraId();
 
     @ManyToOne
-    @JoinColumn(name = "id_estudiante", referencedColumnName = "dni")
+    @MapsId("idEstudiante")
+    @JoinColumn(name = "id_estudiante")
     private Estudiante estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "id_carrera", referencedColumnName = "id_carrera")
+    @MapsId("idCarrera")
+    @JoinColumn(name = "id_carrera")
     private Carrera carrera;
 
     private int inscripcion;
     private int graduacion; // 0 si no se graduó
-    private int antiguedad;
 
     public EstudianteCarrera() {}
 
-
-    public EstudianteCarrera(int id, Estudiante estudiante, Carrera carrera, int inscripcion, int graduacion, int antiguedad) {
-        this.id = id;
+    public EstudianteCarrera(Estudiante estudiante, Carrera carrera, int inscripcion, int graduacion) {
         this.estudiante = estudiante;
         this.carrera = carrera;
         this.inscripcion = inscripcion;
         this.graduacion = graduacion;
-        this.antiguedad = antiguedad;
+        this.id = new EstudianteCarreraId(estudiante.getDni(), carrera.getIdCarrera());
     }
 
-    public int getId() {
-        return id;
+    public EstudianteCarreraId getId() { 
+        return id; 
+    }
+    public void setId(EstudianteCarreraId id) { 
+        this.id = id; 
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Estudiante getEstudiante() { 
+        return estudiante; 
     }
-
-    public Estudiante getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
+    public void setEstudiante(Estudiante estudiante) { 
+        this.estudiante = estudiante; 
     }
 
     public Carrera getCarrera() {
-        return carrera;
+         return carrera; 
+        }
+    public void setCarrera(Carrera carrera) { 
+        this.carrera = carrera; 
     }
 
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
+    public int getInscripcion() { 
+        return inscripcion; 
+    }
+    public void setInscripcion(int inscripcion) { 
+        this.inscripcion = inscripcion; 
     }
 
-    public int getInscripcion() {
-        return inscripcion;
+    public int getGraduacion() { 
+        return graduacion; 
+    }
+    public void setGraduacion(int graduacion) { 
+        this.graduacion = graduacion; 
     }
 
-    public void setInscripcion(int inscripcion) {
-        this.inscripcion = inscripcion;
-    }
-
-    public int getGraduacion() {
-        return graduacion;
-    }
-
-    public void setGraduacion(int graduacion) {
-        this.graduacion = graduacion;
-    }
-
-    public int getAntiguedad() {
-        return antiguedad;
-    }
-
-    public void setAntiguedad(int antiguedad) {
-        this.antiguedad = antiguedad;
+    // Opcional: método para calcular la antigüedad al vuelo si se necesita en la lógica
+    public int getAntiguedad(int anioActual) {
+        return anioActual - inscripcion;
     }
 }

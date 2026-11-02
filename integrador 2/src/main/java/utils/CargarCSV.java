@@ -1,21 +1,23 @@
 package utils;
 
-import entities.Carrera;
-import entities.Estudiante;
-import entities.EstudianteCarrera;
-import jakarta.persistence.EntityManager;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
+import entities.Carrera;
+import entities.Estudiante;
+import entities.EstudianteCarrera;
+import jakarta.persistence.EntityManager;
 
 public class CargarCSV {
 
     public static void cargar(EntityManager em) throws Exception {
         em.getTransaction().begin();
 
+        // 1. Cargar Carreras
         Reader readerCarreras = new InputStreamReader(
                 CargarCSV.class.getClassLoader().getResourceAsStream("carreras.csv"));
         CSVParser parserCarreras = CSVFormat.DEFAULT.withHeader().parse(readerCarreras);
@@ -30,6 +32,7 @@ public class CargarCSV {
         }
         parserCarreras.close();
 
+        // 2. Cargar Estudiantes
         Reader readerEstudiantes = new InputStreamReader(
                 CargarCSV.class.getClassLoader().getResourceAsStream("estudiantes.csv"));
         CSVParser parserEstudiantes = CSVFormat.DEFAULT.withHeader().parse(readerEstudiantes);
@@ -48,22 +51,24 @@ public class CargarCSV {
         }
         parserEstudiantes.close();
 
+        // 3. Cargar Relación Estudiante-Carrera (Matrículas)
         Reader readerEC = new InputStreamReader(
                 CargarCSV.class.getClassLoader().getResourceAsStream("estudianteCarrera.csv"));
         CSVParser parserEC = CSVFormat.DEFAULT.withHeader().parse(readerEC);
 
         for (CSVRecord row : parserEC) {
             Estudiante est = em.find(Estudiante.class, Integer.parseInt(row.get("id_estudiante")));
-            Carrera car = em.find(Carrera.class, Integer.parseInt(row.get("id_carrera")));
+            Carrera carrera = em.find(Carrera.class, Integer.parseInt(row.get("id_carrera")));
+            
             EstudianteCarrera ec = new EstudianteCarrera(
-                Integer.parseInt(row.get("id")),
                 est,
-                car,
+                carrera,
                 Integer.parseInt(row.get("inscripcion")),
-                Integer.parseInt(row.get("graduacion")),
-                Integer.parseInt(row.get("antiguedad"))
+                Integer.parseInt(row.get("graduacion"))
             );
-            em.persist(ec);
+            
+            // Usamos merge en lugar de persist por si hay registros repetidos en el CSV
+            em.merge(ec);
         }
         parserEC.close();
 
