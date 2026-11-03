@@ -35,53 +35,32 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 
     @Override
     public List<ReporteCarreraDTO> generarReporteAnual() {
+        // Una sola query nativa que une inscriptos y egresados por carrera y año
+        String sql =
+            "SELECT carrera, anio, SUM(inscriptos), SUM(egresados) " +
+            "FROM ( " +
+            "    SELECT c.carrera AS carrera, ec.inscripcion AS anio, COUNT(*) AS inscriptos, 0 AS egresados " +
+            "    FROM estudiante_carrera ec JOIN carrera c ON ec.id_carrera = c.id_carrera " +
+            "    GROUP BY c.carrera, ec.inscripcion " +
+            "    UNION ALL " +
+            "    SELECT c.carrera AS carrera, ec.graduacion AS anio, 0 AS inscriptos, COUNT(*) AS egresados " +
+            "    FROM estudiante_carrera ec JOIN carrera c ON ec.id_carrera = c.id_carrera " +
+            "    WHERE ec.graduacion > 0 " +
+            "    GROUP BY c.carrera, ec.graduacion " +
+            ") AS combined " +
+            "GROUP BY carrera, anio " +
+            "ORDER BY carrera ASC, anio ASC";
 
-        // inscriptos agrupados por carrera y año de inscripcion
-        List<Object[]> inscriptos = em.createQuery(
-            "SELECT ec.carrera.carrera, ec.inscripcion, COUNT(ec) " +
-            "FROM EstudianteCarrera ec " +
-            "GROUP BY ec.carrera.carrera, ec.inscripcion",
-            Object[].class
-        ).getResultList();
+        List<Object[]> filas = em.createNativeQuery(sql).getResultList();
 
-        // egresados agrupados por carrera y año de graduacion (excluye los que no se graduaron)
-        List<Object[]> egresados = em.createQuery(
-            "SELECT ec.carrera.carrera, ec.graduacion, COUNT(ec) " +
-            "FROM EstudianteCarrera ec " +
-            "WHERE ec.graduacion <> 0 " +
-            "GROUP BY ec.carrera.carrera, ec.graduacion",
-            Object[].class
-        ).getResultList();
-
-        // se usa un mapa con clave "carrera-anio" para combinar los dos resultados
-        HashMap<String, ReporteCarreraDTO> mapa = new HashMap<>();
-
-        for (Object[] row : inscriptos) {
-            String carrera = (String) row[0];
-            int anio = (Integer) row[1];
-            long cantidad = (Long) row[2];
-            String clave = carrera + "-" + anio;
-            mapa.put(clave, new ReporteCarreraDTO(carrera, anio, cantidad, 0));
+        List<ReporteCarreraDTO> resultado = new ArrayList<>();
+        for (Object[] fila : filas) {
+            String nombre = (String) fila[0];
+            int anio = ((Number) fila[1]).intValue();
+            long inscriptos = ((Number) fila[2]).longValue();
+            long egresados = ((Number) fila[3]).longValue();
+            resultado.add(new ReporteCarreraDTO(nombre, anio, inscriptos, egresados));
         }
-
-        for (Object[] row : egresados) {
-            String carrera = (String) row[0];
-            int anio = (Integer) row[1];
-            long cantidad = (Long) row[2];
-            String clave = carrera + "-" + anio;
-            if (mapa.containsKey(clave)) {
-                ReporteCarreraDTO dto = mapa.get(clave);
-                mapa.put(clave, new ReporteCarreraDTO(carrera, anio, dto.getCantidadInscriptos(), cantidad));
-            } else {
-                mapa.put(clave, new ReporteCarreraDTO(carrera, anio, 0, cantidad));
-            }
-        }
-
-        // ordenar alfabeticamente por carrera y cronologicamente por año
-        List<ReporteCarreraDTO> resultado = new ArrayList<>(mapa.values());
-        resultado.sort(Comparator.comparing(ReporteCarreraDTO::getNombreCarrera)
-                .thenComparingInt(ReporteCarreraDTO::getAnio));
-
         return resultado;
     }
 }

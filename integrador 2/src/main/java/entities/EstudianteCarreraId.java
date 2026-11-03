@@ -1,45 +1,30 @@
 package entities;
 
-import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Embeddable
 public class EstudianteCarreraId implements Serializable {
-    private int idEstudiante;
-    private int idCarrera;
+
+    private int estudiante;
+    private int carrera;
 
     public EstudianteCarreraId() {}
 
-    public EstudianteCarreraId(int idEstudiante, int idCarrera) {
-        this.idEstudiante = idEstudiante;
-        this.idCarrera = idCarrera;
-    }
-
-    public int getIdEstudiante() { 
-        return idEstudiante; 
-    }
-    public void setIdEstudiante(int idEstudiante) { 
-        this.idEstudiante = idEstudiante; 
-    }
-
-    public int getIdCarrera() { 
-        return idCarrera; 
-    }
-    public void setIdCarrera(int idCarrera) { 
-        this.idCarrera = idCarrera; 
+    public EstudianteCarreraId(int estudiante, int carrera) {
+        this.estudiante = estudiante;
+        this.carrera = carrera;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof EstudianteCarreraId)) return false;
         EstudianteCarreraId that = (EstudianteCarreraId) o;
-        return idEstudiante == that.idEstudiante && idCarrera == that.idCarrera;
+        return estudiante == that.estudiante && carrera == that.carrera;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEstudiante, idCarrera);
+        return Objects.hash(estudiante, carrera);
     }
 }

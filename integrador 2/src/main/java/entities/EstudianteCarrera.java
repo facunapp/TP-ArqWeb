@@ -1,22 +1,21 @@
 package entities;
 
 import jakarta.persistence.*;
+import java.time.Year;
 
 @Entity
 @Table(name = "estudiante_carrera")
+@IdClass(EstudianteCarreraId.class)
 public class EstudianteCarrera {
 
-    @EmbeddedId
-    private EstudianteCarreraId id = new EstudianteCarreraId();
-
+    @Id
     @ManyToOne
-    @MapsId("idEstudiante")
-    @JoinColumn(name = "id_estudiante")
+    @JoinColumn(name = "id_estudiante", referencedColumnName = "dni")
     private Estudiante estudiante;
 
+    @Id
     @ManyToOne
-    @MapsId("idCarrera")
-    @JoinColumn(name = "id_carrera")
+    @JoinColumn(name = "id_carrera", referencedColumnName = "id_carrera")
     private Carrera carrera;
 
     private int inscripcion;
@@ -29,46 +28,22 @@ public class EstudianteCarrera {
         this.carrera = carrera;
         this.inscripcion = inscripcion;
         this.graduacion = graduacion;
-        this.id = new EstudianteCarreraId(estudiante.getDni(), carrera.getIdCarrera());
     }
 
-    public EstudianteCarreraId getId() { 
-        return id; 
-    }
-    public void setId(EstudianteCarreraId id) { 
-        this.id = id; 
-    }
+    public Estudiante getEstudiante() { return estudiante; }
+    public void setEstudiante(Estudiante estudiante) { this.estudiante = estudiante; }
 
-    public Estudiante getEstudiante() { 
-        return estudiante; 
-    }
-    public void setEstudiante(Estudiante estudiante) { 
-        this.estudiante = estudiante; 
-    }
+    public Carrera getCarrera() { return carrera; }
+    public void setCarrera(Carrera carrera) { this.carrera = carrera; }
 
-    public Carrera getCarrera() {
-         return carrera; 
-        }
-    public void setCarrera(Carrera carrera) { 
-        this.carrera = carrera; 
-    }
+    public int getInscripcion() { return inscripcion; }
+    public void setInscripcion(int inscripcion) { this.inscripcion = inscripcion; }
 
-    public int getInscripcion() { 
-        return inscripcion; 
-    }
-    public void setInscripcion(int inscripcion) { 
-        this.inscripcion = inscripcion; 
-    }
+    public int getGraduacion() { return graduacion; }
+    public void setGraduacion(int graduacion) { this.graduacion = graduacion; }
 
-    public int getGraduacion() { 
-        return graduacion; 
-    }
-    public void setGraduacion(int graduacion) { 
-        this.graduacion = graduacion; 
-    }
-
-    // Opcional: método para calcular la antigüedad al vuelo si se necesita en la lógica
-    public int getAntiguedad(int anioActual) {
-        return anioActual - inscripcion;
+    // la antiguedad se calcula, no se almacena
+    public int getAntiguedad() {
+        return Year.now().getValue() - inscripcion;
     }
 }
