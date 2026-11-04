@@ -1,16 +1,16 @@
 package repository.impl;
 
+import java.util.List;
+
 import entities.Estudiante;
 import jakarta.persistence.EntityManager;
 import repository.EstudianteRepository;
-
-import java.util.List;
 
 public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     private EntityManager em;
 
-    // Constructor que recibe el EntityManager, tal como se recomienda en el Patrón DAO[cite: 5]
+    // Constructor que recibe el EntityManager, tal como se recomienda en el Patrón DAO
     public EstudianteRepositoryImpl(EntityManager em) {
         this.em = em;
     }

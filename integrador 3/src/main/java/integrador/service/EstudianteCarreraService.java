@@ -1,16 +1,17 @@
 package integrador.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.springframework.stereotype.Service;
+
 import dto.ReporteCarreraDTO;
 import entities.Carrera;
 import entities.Estudiante;
 import entities.EstudianteCarrera;
 import integrador.repository.EstudianteCarreraRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 @Service
 public class EstudianteCarreraService {
@@ -21,20 +22,9 @@ public EstudianteCarreraService(EstudianteCarreraRepository repository) {
 this.repository = repository;
 }
 
-public EstudianteCarrera matricular(
-Estudiante estudiante,
-Carrera carrera,
-int anioInscripcion) {
-
-EstudianteCarrera matricula = new EstudianteCarrera();
-
-matricula.setEstudiante(estudiante);
-matricula.setCarrera(carrera);
-matricula.setInscripcion(anioInscripcion);
-matricula.setGraduacion(0);
-matricula.setAntiguedad(0);
-
-return repository.save(matricula);
+public void matricular(Estudiante estudiante, Carrera carrera, int anioInscripcion) {
+    EstudianteCarrera matricula = new EstudianteCarrera(estudiante, carrera, anioInscripcion, 0);
+    repository.save(matricula);
 }
 
     public List<Estudiante> getEstudiantesPorCarreraYCiudad(Long idCarrera, String ciudad) {
