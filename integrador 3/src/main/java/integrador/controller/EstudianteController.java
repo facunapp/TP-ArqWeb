@@ -1,5 +1,6 @@
 package integrador.controller;
 
+import dto.EstudianteDTO;
 import entities.Estudiante;
 import integrador.service.EstudianteService;
 import org.springframework.web.bind.annotation.*;
@@ -16,28 +17,27 @@ public class EstudianteController {
         this.estudianteService = estudianteService;
     }
 
-    // 2.a - Dar de alta
+    // 2.a - Dar de alta (devuelve DTO)
     @PostMapping
-    public Estudiante guardar(@RequestBody Estudiante estudiante) {
+    public EstudianteDTO guardar(@RequestBody Estudiante estudiante) {
         return estudianteService.guardar(estudiante);
     }
 
-    // 2.c - Todos los estudiantes
+    // 2.c - Todos los estudiantes (devuelve DTOs)
     @GetMapping
-    public List<Estudiante> obtenerTodos() {
+    public List<EstudianteDTO> obtenerTodos() {
         return estudianteService.obtenerTodos();
     }
 
-    // 2.d - Buscar por LU
+    // 2.d - Buscar por LU (devuelve DTO)
     @GetMapping("/lu/{lu}")
-    public Estudiante buscarPorLu(@PathVariable int lu) {
+    public EstudianteDTO buscarPorLu(@PathVariable int lu) {
         return estudianteService.buscarPorLu(lu);
     }
 
-    // 2.e - Buscar por género
+    // 2.e - Buscar por género (devuelve DTOs)
     @GetMapping("/genero/{genero}")
-    public List<Estudiante> obtenerPorGenero(@PathVariable String genero) {
+    public List<EstudianteDTO> obtenerPorGenero(@PathVariable String genero) {
         return estudianteService.obtenerPorGenero(genero);
     }
-
 }

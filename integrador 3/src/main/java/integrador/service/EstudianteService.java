@@ -1,11 +1,13 @@
 package integrador.service;
 
+import dto.EstudianteDTO;
 import entities.Estudiante;
 import integrador.repository.EstudianteRepository;
-import org.springframework.data.domain.Sort;
+import org.springframework.data (http://org.springframework.data/).domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream (http://java.util.stream/).Collectors;
 
 @Service
 public class EstudianteService {
@@ -16,25 +18,31 @@ public class EstudianteService {
         this.estudianteRepository = estudianteRepository;
     }
 
-    // 2.a
-    public Estudiante guardar(Estudiante estudiante) {
-        return estudianteRepository.save(estudiante);
+    // 2.a - Guarda y devuelve el DTO
+    public EstudianteDTO guardar(Estudiante estudiante) {
+        Estudiante saved = estudianteRepository.save (http://estudianteRepository.save/)(estudiante);
+        return new EstudianteDTO(saved);
     }
 
-    // 2.c
-    public List<Estudiante> obtenerTodos() {
-        return estudianteRepository.findAll(
-                Sort.by(Sort.Direction.ASC, "apellido")
-        );
+    // 2.c - Mapea la lista de entidades a lista de DTOs
+    public List<EstudianteDTO> obtenerTodos() {
+        return estudianteRepository.findAll(Sort.by (http://Sort.by/)(Sort.Direction.ASC, "apellido"))
+                .stream()
+                .map(EstudianteDTO::new)
+                .collect(Collectors.toList());
     }
 
     // 2.d
-    public Estudiante buscarPorLu(int lu) {
-        return estudianteRepository.findByLu(lu);
+    public EstudianteDTO buscarPorLu(int lu) {
+        Estudiante e = estudianteRepository.findByLu(lu);
+        return e != null ? new EstudianteDTO(e) : null;
     }
 
-    //2.e
-    public List<Estudiante> obtenerPorGenero(String genero) {
-        return estudianteRepository.findByGenero(genero);
+    // 2.e
+    public List<EstudianteDTO> obtenerPorGenero(String genero) {
+        return estudianteRepository.findByGenero(genero)
+                .stream()
+                .map(EstudianteDTO::new)
+                .collect(Collectors.toList());
     }
 }
