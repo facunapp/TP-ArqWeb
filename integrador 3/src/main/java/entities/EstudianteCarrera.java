@@ -39,6 +39,8 @@ public class EstudianteCarrera {
         this.graduacion = graduacion;
     }
 
+
+
     public Estudiante getEstudiante() { return estudiante; }
     public void setEstudiante(Estudiante estudiante) { this.estudiante = estudiante; }
 

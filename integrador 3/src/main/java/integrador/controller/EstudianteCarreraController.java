@@ -2,6 +2,7 @@ package integrador.controller;
 
 import dto.CarreraDTO;
 import dto.EstudianteDTO;
+import dto.MatriculaDTO;
 import dto.ReporteCarreraDTO;
 import entities.Carrera;
 import entities.Estudiante;

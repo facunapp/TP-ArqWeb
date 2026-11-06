@@ -1,5 +1,9 @@
 package utils;
 
+/*
+ * Codigo del TP2 (carga con EntityManager). Se deja comentado porque ya no
+ * compila con la entidad EstudianteCarrera actual y la app de Spring no lo usa.
+
 import entities.Carrera;
 import entities.Estudiante;
 import entities.EstudianteCarrera;
@@ -71,3 +75,4 @@ public class CargarCSV {
         System.out.println("Datos cargados correctamente.");
     }
 }
+*/

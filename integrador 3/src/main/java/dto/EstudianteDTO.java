@@ -16,7 +16,7 @@ public class EstudianteDTO {
         this.edad = edad;
         this.genero = genero;
         this.ciudad = ciudad;
-        this.lu (http://this.lu/) = lu;
+        this.lu = lu;
     }
 
     // Constructor que recibe la entidad para mapear fácilmente si es necesario
@@ -27,7 +27,7 @@ public class EstudianteDTO {
         this.edad = e.getEdad();
         this.genero = e.getGenero();
         this.ciudad = e.getCiudad();
-        this.lu (http://this.lu/) = e.getLu();
+        this.lu = e.getLu();
     }
 
     public int getDni() { return dni; }
