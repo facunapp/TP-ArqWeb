@@ -14,11 +14,12 @@ import java.util.UUID;
 /**
  * Reintegro de dinero por devolucion aprobada o por cancelacion del evento.
  * <p>
- * Pendiente: el modelo pide UNIQUE(entrada_id, tipo) solo cuando tipo = CANCELACION_EVENTO
- * (indice parcial). JPA no puede expresarlo; se agregara con un script SQL / Flyway.
+ * UNIQUE(entrada_id, tipo): a lo sumo un reintegro de cada tipo por entrada, lo que hace idempotente
+ * la cancelacion del evento. Un reintento de reintegro fallido debe reutilizar el registro existente.
  */
 @Entity
-@Table(name = "reintegro", indexes = @Index(name = "idx_reintegro_entrada_tipo", columnList = "entrada_id, tipo"))
+@Table(name = "reintegro",
+        uniqueConstraints = @UniqueConstraint(name = "uk_reintegro_entrada_tipo", columnNames = {"entrada_id", "tipo"}))
 @Getter
 @Setter
 @NoArgsConstructor
